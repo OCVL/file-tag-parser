@@ -1,6 +1,6 @@
 from enum import StrEnum
 
-class DataFormatType(StrEnum):
+class DataFormat(StrEnum):
     FORMAT_TYPE = "Data_Type"
     IMAGE = "image_format"
     VIDEO = "video_format"
