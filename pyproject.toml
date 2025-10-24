@@ -5,8 +5,22 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "file-tag-parser"
 version = "0.1"
+readme = "README.md"
+description = "A tag-based filename parser for imaging data."
+authors = [
+  { name="Rob F Cooper", email="robert.cooper@marquette.edu" },
+]
+license = "Apache 2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
 dependencies = [
     "pandas>=2.0",
     "parse>=1.2.0",
     "parse-type>=0.6.4"
 ]
+[project.urls]
+Homepage = "https://github.com/OCVL/file-tag-parser"
