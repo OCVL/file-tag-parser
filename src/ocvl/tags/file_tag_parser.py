@@ -9,11 +9,11 @@ from ocvl.tags.json_format_constants import DataTags, DataFormat, AcquisiTags, M
 
 
 class FileTagParser():
-    def __init__(self, format_dict=None):
-        self.formatlocs = dict()
-        self.json_dict = dict()
-        self.format_parsers = dict()
+    formatlocs = dict()
+    json_dict = dict()
+    format_parsers = dict()
 
+    def __init__(self, format_dict=None):
         # An optional parser for strings.
         self.optional_parse = TypeBuilder.with_optional(lambda opt_str: str(opt_str))
 

@@ -24,6 +24,8 @@ class FileTagTestCase(unittest.TestCase):
         parse_me = FileTagParser.from_json(self.test_json_fname, root_group="preanalysis")
         self.assertGreater(len(parse_me.format_parsers), 0,"Parser have more than 0 parsers available, since we are supplying a base json group.")
 
+        self.assertNotEqual(len(parse_me.json_dict), 0, "JSON should not be empty.")
+
 
     def test_json_file_parsing(self):
 
