@@ -47,7 +47,7 @@ class FileTagParser():
             for format in DataFormat:
                 form = cls.json_dict.get(format)
 
-                if form is not None:
+                if form is not None and isinstance(form, str):
                     form_dict[format] = form
 
                     cls.parser_extensions = cls.parser_extensions + (form[form.rfind(".", -5, -1):],) if form and form[form.rfind(".", -5,
