@@ -9,7 +9,7 @@ from ocvl.tags.json_format_constants import DataTags, DataFormat, AcquisiTags, M
 
 
 class FileTagParser():
-    formatlocs = dict()
+
     json_dict = dict()
     format_parsers = dict()
 
@@ -34,18 +34,20 @@ class FileTagParser():
         allFilesColumns = [AcquisiTags.DATASET, AcquisiTags.DATA_PATH, DataFormat.FORMAT_TYPE]
         allFilesColumns.extend([d.value for d in DataTags])
 
+        cls.json_dict = json_dict_base
+
         if root_group is not None:
-            cls.json_dict = json_dict_base.get(root_group)
+            sub_dict = json_dict_base.get(root_group)
         else:
-            cls.json_dict = json_dict_base
+            sub_dict = json_dict_base
 
         cls.parser_extensions = ()
 
-        if cls.json_dict is not None and parse_path is not None:
+        if sub_dict is not None and parse_path is not None:
             form_dict = dict()
 
             for format in DataFormat:
-                form = cls.json_dict.get(format)
+                form = sub_dict.get(format)
 
                 if form is not None and isinstance(form, str):
                     form_dict[format] = form
@@ -55,8 +57,8 @@ class FileTagParser():
 
             metadata_form = None
             metadata_params = None
-            if cls.json_dict.get(MetaTags.METATAG) is not None:
-                metadata_params = cls.json_dict.get(MetaTags.METATAG)
+            if sub_dict.get(MetaTags.METATAG) is not None:
+                metadata_params = sub_dict.get(MetaTags.METATAG)
                 metadata_form = metadata_params.get(DataFormat.METADATA)
 
             cls.parser_extensions = cls.parser_extensions + (metadata_form[metadata_form.rfind(".", -5, -1):],) if metadata_form and metadata_form[ metadata_form.rfind(".", -5, -1):] not in cls.parser_extensions else cls.parser_extensions
