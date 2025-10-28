@@ -5,7 +5,7 @@ import pandas as pd
 import parse
 from parse_type import TypeBuilder
 
-from ocvl.tags.json_format_constants import DataTags, DataFormat, AcquisiTags, MetaTags
+from file_tag_parser.tags.json_format_constants import AcquisiTags
 
 
 class FileTagParser():
