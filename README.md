@@ -1,4 +1,9 @@
 # file-tag-parser
+
+| | |
+| --- | --- |
+|Package| [![PyPI Latest Release](https://img.shields.io/pypi/v/file-tag-parser.svg)](https://pypi.org/project/file-tag-parser/)|
+
 A tag-based filename parser for imaging data.
 
 This library is designed to make parsing of arbitrary filenames attainable and searchable via a pandas-based database. 
