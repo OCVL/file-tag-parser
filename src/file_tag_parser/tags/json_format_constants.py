@@ -32,7 +32,7 @@ class DataTags(StrEnum):
 class MetaTags(StrEnum):
     METATAG = "metadata"
 
-class AcquisiTags(StrEnum):
+class AcquisiPaths(StrEnum):
     DATASET = "Dataset"
     DATA_PATH = "Data_Path"
     OUTPUT_PATH = "Output_Path"

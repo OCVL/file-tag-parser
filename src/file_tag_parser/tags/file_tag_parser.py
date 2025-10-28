@@ -5,7 +5,7 @@ import pandas as pd
 import parse
 from parse_type import TypeBuilder
 
-from file_tag_parser.tags.json_format_constants import AcquisiTags, DataFormat, DataTags, MetaTags
+from file_tag_parser.tags.json_format_constants import AcquisiPaths, DataFormat, DataTags, MetaTags
 
 
 class FileTagParser():
@@ -33,7 +33,7 @@ class FileTagParser():
     @classmethod
     def from_dataformat_dict(cls, json_dict_base=None, root_group=None):
 
-        allFilesColumns = [AcquisiTags.DATASET, AcquisiTags.DATA_PATH, DataFormat.FORMAT_TYPE]
+        allFilesColumns = [AcquisiPaths.DATASET, AcquisiPaths.DATA_PATH, DataFormat.FORMAT_TYPE]
         allFilesColumns.extend([d.value for d in DataTags])
 
         json_dict = json_dict_base
@@ -106,9 +106,9 @@ class FileTagParser():
                     format_type, file_info = self.parse_filename(path.name)
                     if format_type is not None:
                         file_info[DataFormat.FORMAT_TYPE] = format_type
-                        file_info[AcquisiTags.DATA_PATH] = path
-                        file_info[AcquisiTags.BASE_PATH] = path.parent
-                        file_info[AcquisiTags.DATASET] = None
+                        file_info[AcquisiPaths.DATA_PATH] = path
+                        file_info[AcquisiPaths.BASE_PATH] = path.parent
+                        file_info[AcquisiPaths.DATASET] = None
                         entry = pd.DataFrame.from_dict([file_info])
 
                         allFiles.append(entry)
@@ -118,9 +118,9 @@ class FileTagParser():
                     format_type, file_info = self.parse_filename(path.name)
                     if format_type is not None:
                         file_info[DataFormat.FORMAT_TYPE] = format_type
-                        file_info[AcquisiTags.DATA_PATH] = path
-                        file_info[AcquisiTags.BASE_PATH] = path.parent
-                        file_info[AcquisiTags.DATASET] = None
+                        file_info[AcquisiPaths.DATA_PATH] = path
+                        file_info[AcquisiPaths.BASE_PATH] = path.parent
+                        file_info[AcquisiPaths.DATASET] = None
                         entry = pd.DataFrame.from_dict([file_info])
 
                         allFiles.append(entry)
