@@ -2,8 +2,8 @@ import os
 import unittest
 from pathlib import Path
 
-from ocvl.tags.file_tag_parser import FileTagParser
-from ocvl.tags.json_format_constants import DataFormat
+from file_tag_parser.tags.file_tag_parser import FileTagParser
+from file_tag_parser.tags.json_format_constants import DataFormat
 
 
 class FileTagTestCase(unittest.TestCase):
