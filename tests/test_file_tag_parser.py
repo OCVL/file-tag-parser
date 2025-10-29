@@ -9,6 +9,7 @@ from file_tag_parser.tags.json_format_constants import DataFormat
 class FileTagTestCase(unittest.TestCase):
     def setUp(self):
         self.test_json_fname = Path(os.path.dirname(__file__)).joinpath("json_ex/test_json.json")
+        self.test_json_fname_nometa = Path(os.path.dirname(__file__)).joinpath("json_ex/test_json_nometa.json")
 
         self.test_preanalysis_nomatch_vid = "00-36828_20230324_OD_(4,0)_1x1_6385_760nm1_extract_reg_cropped_piped.avi"
         self.test_preanalysis_match_vid = "00-36828_20230324_OD_(4,0)_1x1_6385_760nm1_vid.avi"
@@ -25,6 +26,8 @@ class FileTagTestCase(unittest.TestCase):
         self.assertGreater(len(parse_me.format_parsers), 0,"Parser have more than 0 parsers available, since we are supplying a base json group.")
 
         self.assertNotEqual(len(parse_me.json_dict), 0, "JSON should not be empty.")
+
+        parse_me = FileTagParser.from_json(self.test_json_fname_nometa, root_group="analysis")
 
 
     def test_json_file_parsing(self):

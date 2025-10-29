@@ -59,7 +59,7 @@ class FileTagParser():
 
             metadata_form = None
             metadata_params = None
-            if sub_dict.get(MetaTags.METATAG) is not None:
+            if sub_dict.get(MetaTags.METATAG) is not None and sub_dict.get(MetaTags.METATAG).get(DataFormat.METADATA) is not None:
                 metadata_params = sub_dict.get(MetaTags.METATAG)
                 form_dict[DataFormat.METADATA] = metadata_params.get(DataFormat.METADATA)
 
