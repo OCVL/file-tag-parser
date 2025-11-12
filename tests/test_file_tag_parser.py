@@ -13,6 +13,7 @@ class FileTagTestCase(unittest.TestCase):
 
         self.test_preanalysis_nomatch_vid = "00-36828_20230324_OD_(4,0)_1x1_6385_760nm1_extract_reg_cropped_piped.avi"
         self.test_preanalysis_match_vid = "00-36828_20230324_OD_(4,0)_1x1_6385_760nm1_vid.avi"
+        self.test_preanalysis_match_meta = "00-36828_20230324_OD_(4,0)_1x1_6385_760nm1_vid.csv"
         self.test_preanalysis_nomatch_mask = "00-36828_20230324_OD_(4,0)_1x1_6385_760nm1_piped.avi"
         self.test_preanalysis_match_mask = "00-36828_20230324_OD_(4,0)_1x1_6385_760nm1_mask.avi"
 
@@ -27,7 +28,7 @@ class FileTagTestCase(unittest.TestCase):
 
         self.assertNotEqual(len(parse_me.json_dict), 0, "JSON should not be empty.")
 
-        parse_me = FileTagParser.from_json(self.test_json_fname_nometa, root_group="analysis")
+        parse_me_analysis = FileTagParser.from_json(self.test_json_fname_nometa, root_group="analysis")
 
 
     def test_json_file_parsing(self):
@@ -40,8 +41,14 @@ class FileTagTestCase(unittest.TestCase):
         self.assertEqual(len(file_tags), 0, f"This filename ({self.test_preanalysis_nomatch_vid}) should not produce any matches with the parser")
 
         used_parser, file_tags = parse_me.parse_filename(self.test_preanalysis_match_vid)
-        self.assertEqual(used_parser, DataFormat.VIDEO,f"This filename ({self.test_preanalysis_match_vid}) match the video format parser.")
+        self.assertEqual(DataFormat.VIDEO, used_parser,f"This filename ({self.test_preanalysis_match_vid}) match the video format parser.")
         self.assertEqual(len(file_tags), 11, f"This filename ({self.test_preanalysis_match_vid}) should produce 11 matches with the parser.")
+        print(f"SUCCESS: Used parser: {used_parser}")
+        print(f"Found tags: {file_tags}")
+
+        used_parser, file_tags = parse_me.parse_filename(self.test_preanalysis_match_meta)
+        self.assertEqual(DataFormat.METADATA, used_parser,f"This filename ({self.test_preanalysis_match_meta}) matches the metadata format parser.")
+        self.assertEqual(len(file_tags), 11, f"This filename ({self.test_preanalysis_match_meta}) should produce 11 matches with the parser.")
         print(f"SUCCESS: Used parser: {used_parser}")
         print(f"Found tags: {file_tags}")
 
@@ -50,7 +57,7 @@ class FileTagTestCase(unittest.TestCase):
         self.assertEqual(len(file_tags), 0, f"This filename ({self.test_preanalysis_nomatch_mask}) should not produce any matches with the parser")
 
         used_parser, file_tags = parse_me.parse_filename(self.test_preanalysis_match_mask)
-        self.assertEqual(used_parser, DataFormat.MASK,f"This filename ({self.test_preanalysis_match_mask}) should match the mask format parser.")
+        self.assertEqual(DataFormat.MASK, used_parser ,f"This filename ({self.test_preanalysis_match_mask}) should match the mask format parser.")
         self.assertEqual(len(file_tags), 11, f"This filename ({self.test_preanalysis_match_mask}) produce 11 matches with the parser.")
         print(f"SUCCESS: Used parser: {used_parser}")
         print(f"Found tags: {file_tags}")

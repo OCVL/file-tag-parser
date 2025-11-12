@@ -61,7 +61,8 @@ class FileTagParser():
             metadata_params = None
             if sub_dict.get(MetaTags.METATAG) is not None and sub_dict.get(MetaTags.METATAG).get(DataFormat.METADATA) is not None:
                 metadata_params = sub_dict.get(MetaTags.METATAG)
-                form_dict[DataFormat.METADATA] = metadata_params.get(DataFormat.METADATA)
+                metadata_form = metadata_params.get(DataFormat.METADATA)
+                form_dict[DataFormat.METADATA] = metadata_form
 
             parser_extensions = parser_extensions + (metadata_form[metadata_form.rfind(".", -5, -1):],) if metadata_form and metadata_form[ metadata_form.rfind(".", -5, -1):] not in parser_extensions else parser_extensions
 
@@ -76,22 +77,24 @@ class FileTagParser():
         parsed_str = None
         parser_used = None
 
-        for dataformat, parser in self.format_parsers.items():
-            parsed_str = parser.parse(file_string)
+        for ext in self.parser_extensions:
+            if ext in file_string:
+                for dataformat, parser in self.format_parsers.items():
+                    parsed_str = parser.parse(file_string)
 
-            if parsed_str is not None:
-                parser_used = dataformat
-                break
+                    if parsed_str is not None:
+                        parser_used = dataformat
+                        break
 
-        if parsed_str is None:
-            return None, filename_tags
+                if parsed_str is None:
+                    return None, filename_tags
 
-        for formatstr in DataTags:
-            if formatstr in parsed_str.named:
-                if parsed_str[formatstr] is not None:
-                    filename_tags[formatstr.value] = parsed_str[formatstr]
-                else:
-                    filename_tags[formatstr.value] = ""
+                for formatstr in DataTags:
+                    if formatstr in parsed_str.named:
+                        if parsed_str[formatstr] is not None:
+                            filename_tags[formatstr.value] = parsed_str[formatstr]
+                        else:
+                            filename_tags[formatstr.value] = ""
 
         return parser_used, filename_tags
 
